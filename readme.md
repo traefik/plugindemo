@@ -173,7 +173,7 @@ Every 30 minutes, the Traefik Pilot online service polls Github to find new plug
 To be recognized by Traefik Pilot, your repository must meet the following criteria:
 
 - The `traefik-plugin` topic must be set.
-- The `.traefik.yml` manifest must exit and be filled.
+- The `.traefik.yml` manifest must exist, and be filled with valid contents.
 
 If your repository fails to meet either of these prerequisites, Traefik Pilot will not see it.
 
@@ -234,7 +234,7 @@ In order for your plugin to be successfully imported by Traefik Pilot, consult t
 - There must be a `.traefik.yml` file at the root of your project describing your plugin, and it must have a valid `testData` property for testing purposes.
 - There must be a valid `go.mod` file at the root of your project.
 - Your plugin must be versioned with a git tag.
-- If you have package dependencies, they must be vendored and added them to your GitHub repository.
+- If you have package dependencies, they must be vendored and added to your GitHub repository.
 
 ## Sample Code
 
