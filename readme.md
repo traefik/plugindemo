@@ -71,8 +71,8 @@ http:
 
 ### Dev Mode
 
-Traefik also offers a developer mode that can be used for temporary local testing of plugins.
-To use dev mode, the Traefik static configuration must define a plugin name, a GOPATH, and the module name (as is usual for Go packages).
+Traefik also offers a developer mode that can be used for temporary testing of plugins not hosted on GitHub.
+To use a plugin in dev mode, the Traefik static configuration must define the module name (as is usual for Go packages) and a path to a [Go workspace](https://golang.org/doc/gopath_code.html#Workspaces), which can be the local GOPATH or any directory.
 
 ```yaml
 # Static configuration
@@ -86,7 +86,7 @@ experimental:
     moduleName: github.com/containous/plugindemo
 ```
 
-(In the above example, the `plugindemo` plugin will be loaded from the local path `/plugins/go/src/github.com/containous/plugindemo`.)
+(In the above example, the `plugindemo` plugin will be loaded from the path `/plugins/go/src/github.com/containous/plugindemo`.)
 
 ```yaml
 # Dynamic configuration
