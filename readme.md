@@ -19,7 +19,7 @@ Once loaded, middleware plugins behave exactly like statically compiled middlewa
 Their instantiation and behavior are driven by the dynamic configuration.
 
 Plugin dependencies must be [vendored](https://golang.org/ref/mod#tmp_25) for each plugin.
-Vendored packages should be included in the plugin's GitHub repository. ("go modules" are not supported.)
+Vendored packages should be included in the plugin's GitHub repository. ([Go modules](https://blog.golang.org/using-go-modules) are not supported.)
 
 ### Configuration
 
@@ -69,9 +69,10 @@ http:
             Foo: Bar
 ```
 
-#### Dev Mode
+### Dev Mode
 
-The Traefik static configuration must define a plugin name, a GoPath, and the module name (as is usual for Go packages).
+Traefik also offers a developer mode that can be used for temporary testing of plugins not hosted on GitHub.
+To use a plugin in dev mode, the Traefik static configuration must define the module name (as is usual for Go packages) and a path to a [Go workspace](https://golang.org/doc/gopath_code.html#Workspaces), which can be the local GOPATH or any directory.
 
 ```yaml
 # Static configuration
@@ -84,6 +85,8 @@ experimental:
     goPath: /plugins/go
     moduleName: github.com/containous/plugindemo
 ```
+
+(In the above example, the `plugindemo` plugin will be loaded from the path `/plugins/go/src/github.com/containous/plugindemo`.)
 
 ```yaml
 # Dynamic configuration
@@ -111,6 +114,10 @@ http:
           headers:
             Foo: Bar
 ```
+
+#### Dev Mode Limitations
+
+Note that only one plugin can be tested in dev mode at a time, and when using dev mode, Traefik will shut down after 30 minutes.
 
 ## Defining a Plugin
 
@@ -166,7 +173,7 @@ func (e *Example) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 
 Traefik plugins are stored and hosted as public GitHub repositories.
 
-Every 30 minutes, the Traefik Pilot online service polls Github to find new plugins and add them to its catalog.
+Every 30 minutes, the Traefik Pilot online service polls Github to find plugins and add them to its catalog.
 
 ### Prerequisites
 
