@@ -4,7 +4,7 @@
 
 A [Traefik](https://traefik.io) middleware plugin is just a [Go package](https://golang.org/ref/spec#Packages) that provides an `http.Handler` to perform specific processing of requests and responses.
 
-Rather than being pre-compiled and linked, however, plugins are executed on the fly by [Yaegi](https://github.com/containous/yaegi), an embedded Go interpreter.
+Rather than being pre-compiled and linked, however, plugins are executed on the fly by [Yaegi](https://github.com/traefik/yaegi), an embedded Go interpreter.
 
 ## Usage
 
@@ -36,7 +36,7 @@ experimental:
 
   plugins:
     example:
-      moduleName: github.com/containous/plugindemo
+      moduleName: github.com/traefik/plugindemo
       version: v0.5.0
 ```
 
@@ -83,10 +83,10 @@ experimental:
 
   devPlugin:
     goPath: /plugins/go
-    moduleName: github.com/containous/plugindemo
+    moduleName: github.com/traefik/plugindemo
 ```
 
-(In the above example, the `plugindemo` plugin will be loaded from the path `/plugins/go/src/github.com/containous/plugindemo`.)
+(In the above example, the `plugindemo` plugin will be loaded from the path `/plugins/go/src/github.com/traefik/plugindemo`.)
 
 ```yaml
 # Dynamic configuration

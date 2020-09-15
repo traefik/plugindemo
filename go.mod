@@ -1,3 +1,3 @@
-module github.com/containous/plugindemo
+module github.com/traefik/plugindemo
 
 go 1.14
