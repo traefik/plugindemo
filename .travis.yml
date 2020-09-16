@@ -27,7 +27,7 @@ before_install:
 install:
   - go mod tidy
   - git diff --exit-code go.mod
-  - git diff --exit-code go.sum
+  # - git diff --exit-code go.sum
   - go mod download
   - go mod vendor
-  - git diff --exit-code ./vendor/
+  # - git diff --exit-code ./vendor/

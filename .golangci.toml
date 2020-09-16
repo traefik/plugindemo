@@ -33,6 +33,7 @@
   disable = [
     "testpackage",
     "goerr113",
+    "nlreturn",
   ]
 
 [issues]

@@ -1,7 +1,7 @@
 displayName: Demo Plugin
 type: middleware
 
-import: github.com/containous/plugindemo
+import: github.com/traefik/plugindemo
 
 summary: '[Demo] Add Request Header'
 
