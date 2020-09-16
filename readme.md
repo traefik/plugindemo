@@ -29,11 +29,10 @@ The following declaration (given here in YAML) defines an plugin:
 
 ```yaml
 # Static configuration
+pilot:
+  token: xxxxx
 
 experimental:
-  pilot:
-    token: xxxxx
-
   plugins:
     example:
       moduleName: github.com/traefik/plugindemo
@@ -76,11 +75,10 @@ To use a plugin in dev mode, the Traefik static configuration must define the mo
 
 ```yaml
 # Static configuration
+pilot:
+  token: xxxxx
 
 experimental:
-  pilot:
-    token: xxxxx
-
   devPlugin:
     goPath: /plugins/go
     moduleName: github.com/traefik/plugindemo
