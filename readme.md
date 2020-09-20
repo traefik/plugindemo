@@ -244,3 +244,5 @@ In order for your plugin to be successfully imported by Traefik Pilot, consult t
 ## Sample Code
 
 This repository includes an example plugin, `demo`, for you to use as a reference for developing your own plugins.
+
+[![Build Status](https://travis-ci.com/traefik/plugindemo.svg?branch=master)](https://travis-ci.com/traefik/plugindemo)
