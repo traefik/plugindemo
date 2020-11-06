@@ -203,6 +203,10 @@ import: github.com/username/my-plugin
 # A brief description of what your plugin is doing.
 summary: Description of what my plugin is doing
 
+# Medias associated to the plugin (optional)
+iconPath: foo/icon.png
+bannerPath: foo/banner.png
+
 # Configuration data for your plugin.
 # This is mandatory,
 # and Traefik Pilot will try to execute the plugin with the data you provide as part of its startup validity tests.
@@ -213,11 +217,13 @@ testData:
 
 Properties include:
 
-- `displayName`: The name of your plugin as displayed in the Traefik Pilot web UI.
-- `type`: For now, `middleware` is the only type available.
-- `import`: The import path of your plugin.
-- `summary`: A brief description of what your plugin is doing.
-- `testData`: Configuration data for your plugin. This is mandatory, and Traefik Pilot will try to execute the plugin with the data you provide as part of its startup validity tests.
+- `displayName` (required): The name of your plugin as displayed in the Traefik Pilot web UI.
+- `type` (required): For now, `middleware` is the only type available.
+- `import` (required): The import path of your plugin.
+- `summary` (required): A brief description of what your plugin is doing.
+- `testData` (required): Configuration data for your plugin. This is mandatory, and Traefik Pilot will try to execute the plugin with the data you provide as part of its startup validity tests.
+- `iconPath` (optional): A local path in the repository to the icon of the project.
+- `bannerPath` (optional): A local path in the repository to the image that will be used when you will share your plugin page in social medias.
 
 There should also be a `go.mod` file at the root of your project. Traefik Pilot will use this file to validate the name of the project.
 
