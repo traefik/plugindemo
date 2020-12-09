@@ -11,7 +11,7 @@ test:
 	go test -v -cover ./...
 
 yaegi_test:
-	yaegi test .
+	yaegi test -v .
 
 vendor:
 	go mod vendor
