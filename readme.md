@@ -96,7 +96,7 @@ pilot:
   token: xxxxx
 
 experimental:
-  localPlugin:
+  localPlugins:
     example:
       moduleName: github.com/traefik/plugindemo
 ```
