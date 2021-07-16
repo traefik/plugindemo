@@ -25,7 +25,7 @@ Vendored packages should be included in the plugin's GitHub repository. ([Go mod
 
 For each plugin, the Traefik static configuration must define the module name (as is usual for Go packages).
 
-The following declaration (given here in YAML) defines an plugin:
+The following declaration (given here in YAML) defines a plugin:
 
 ```yaml
 # Static configuration
