@@ -33,6 +33,7 @@ linters:
     - maligned # deprecated
     - scopelint # deprecated
     - golint # deprecated
+    - exhaustivestruct # deprecated
     - cyclop # duplicate of gocyclo
     - bodyclose # Too many false positives: https://github.com/timakin/bodyclose/issues/30
     - dupl
@@ -42,7 +43,7 @@ linters:
     - nlreturn
     - wsl
     - exhaustive
-    - exhaustivestruct
+    - exhaustruct
     - goerr113
     - wrapcheck
     - ifshort
@@ -50,6 +51,7 @@ linters:
     - lll
     - gomnd
     - forbidigo
+    - varnamelen
 
 issues:
   exclude-use-default: false
