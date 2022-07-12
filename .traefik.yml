@@ -1,5 +1,6 @@
 displayName: Demo Plugin
 type: middleware
+iconPath: .assets/icon.png
 
 import: github.com/traefik/plugindemo
 
