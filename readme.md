@@ -1,3 +1,9 @@
+This repository includes an example plugin, `demo`, for you to use as a reference for developing your own plugins.
+
+[![Build Status](https://github.com/traefik/plugindemo/workflows/Main/badge.svg?branch=master)](https://github.com/traefik/plugindemo/actions)
+
+The existing plugins can be browse into the [Plugin Catalog](https://plugins.traefik.io).
+
 # Developing a Traefik plugin
 
 [Traefik](https://traefik.io) plugins are developed using the [Go language](https://golang.org).
@@ -260,9 +266,3 @@ In order for your plugin to be successfully imported by Traefik Pilot, consult t
 - There must be a valid `go.mod` file at the root of your project.
 - Your plugin must be versioned with a git tag.
 - If you have package dependencies, they must be vendored and added to your GitHub repository.
-
-## Sample Code
-
-This repository includes an example plugin, `demo`, for you to use as a reference for developing your own plugins.
-
-[![Build Status](https://github.com/traefik/plugindemo/workflows/Main/badge.svg?branch=master)](https://github.com/traefik/plugindemo/actions)
