@@ -35,8 +35,6 @@ The following declaration (given here in YAML) defines a plugin:
 
 ```yaml
 # Static configuration
-pilot:
-  token: xxxxx
 
 experimental:
   plugins:
@@ -99,8 +97,6 @@ The source code of the plugin should be organized as follows:
 
 ```yaml
 # Static configuration
-pilot:
-  token: xxxxx
 
 experimental:
   localPlugins:
@@ -187,31 +183,31 @@ func (e *Example) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 }
 ```
 
-## Traefik Pilot
+## Plugins Catalog
 
 Traefik plugins are stored and hosted as public GitHub repositories.
 
-Every 30 minutes, the Traefik Pilot online service polls Github to find plugins and add them to its catalog.
+Every 30 minutes, the Plugins Catalog online service polls Github to find plugins and add them to its catalog.
 
 ### Prerequisites
 
-To be recognized by Traefik Pilot, your repository must meet the following criteria:
+To be recognized by Plugins Catalog, your repository must meet the following criteria:
 
 - The `traefik-plugin` topic must be set.
 - The `.traefik.yml` manifest must exist, and be filled with valid contents.
 
-If your repository fails to meet either of these prerequisites, Traefik Pilot will not see it.
+If your repository fails to meet either of these prerequisites, Plugins Catalog will not see it.
 
 ### Manifest
 
 A manifest is also mandatory, and it should be named `.traefik.yml` and stored at the root of your project.
 
-This YAML file provides Traefik Pilot with information about your plugin, such as a description, a full name, and so on.
+This YAML file provides Plugins Catalog with information about your plugin, such as a description, a full name, and so on.
 
 Here is an example of a typical `.traefik.yml`file:
 
 ```yaml
-# The name of your plugin as displayed in the Traefik Pilot web UI.
+# The name of your plugin as displayed in the Plugins Catalog web UI.
 displayName: Name of your plugin
 
 # For now, `middleware` is the only type available.
@@ -229,7 +225,7 @@ bannerPath: foo/banner.png
 
 # Configuration data for your plugin.
 # This is mandatory,
-# and Traefik Pilot will try to execute the plugin with the data you provide as part of its startup validity tests.
+# and Plugins Catalog will try to execute the plugin with the data you provide as part of its startup validity tests.
 testData:
   Headers:
     Foo: Bar
@@ -237,29 +233,29 @@ testData:
 
 Properties include:
 
-- `displayName` (required): The name of your plugin as displayed in the Traefik Pilot web UI.
+- `displayName` (required): The name of your plugin as displayed in the Plugins Catalog web UI.
 - `type` (required): For now, `middleware` is the only type available.
 - `import` (required): The import path of your plugin.
 - `summary` (required): A brief description of what your plugin is doing.
-- `testData` (required): Configuration data for your plugin. This is mandatory, and Traefik Pilot will try to execute the plugin with the data you provide as part of its startup validity tests.
+- `testData` (required): Configuration data for your plugin. This is mandatory, and Plugins Catalog will try to execute the plugin with the data you provide as part of its startup validity tests.
 - `iconPath` (optional): A local path in the repository to the icon of the project.
 - `bannerPath` (optional): A local path in the repository to the image that will be used when you will share your plugin page in social medias.
 
-There should also be a `go.mod` file at the root of your project. Traefik Pilot will use this file to validate the name of the project.
+There should also be a `go.mod` file at the root of your project. Plugins Catalog will use this file to validate the name of the project.
 
 ### Tags and Dependencies
 
-Traefik Pilot gets your sources from a Go module proxy, so your plugins need to be versioned with a git tag.
+Plugins Catalog gets your sources from a Go module proxy, so your plugins need to be versioned with a git tag.
 
 Last but not least, if your plugin middleware has Go package dependencies, you need to vendor them and add them to your GitHub repository.
 
-If something goes wrong with the integration of your plugin, Traefik Pilot will create an issue inside your Github repository and will stop trying to add your repo until you close the issue.
+If something goes wrong with the integration of your plugin, Plugins Catalog will create an issue inside your Github repository and will stop trying to add your repo until you close the issue.
 
 ## Troubleshooting
 
-If Traefik Pilot fails to recognize your plugin, you will need to make one or more changes to your GitHub repository.
+If Plugins Catalog fails to recognize your plugin, you will need to make one or more changes to your GitHub repository.
 
-In order for your plugin to be successfully imported by Traefik Pilot, consult this checklist:
+In order for your plugin to be successfully imported by Plugins Catalog, consult this checklist:
 
 - The `traefik-plugin` topic must be set on your repository.
 - There must be a `.traefik.yml` file at the root of your project describing your plugin, and it must have a valid `testData` property for testing purposes.
