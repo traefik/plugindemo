@@ -4,7 +4,7 @@ package plugindemo
 import (
 	"bytes"
 	"context"
-	"fmt"
+	"errors"
 	"net/http"
 	"text/template"
 )
@@ -32,7 +32,7 @@ type Demo struct {
 // New created a new Demo plugin.
 func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
 	if len(config.Headers) == 0 {
-		return nil, fmt.Errorf("headers cannot be empty")
+		return nil, errors.New("headers cannot be empty")
 	}
 
 	return &Demo{
