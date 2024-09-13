@@ -13,13 +13,15 @@ jobs:
       matrix:
         go-version: [ oldstable, stable ]
         os: [ubuntu-latest, macos-latest, windows-latest]
+        arch: ['x32', 'x64']
 
     steps:
       # https://github.com/marketplace/actions/setup-go-environment
-      - name: Set up Go ${{ matrix.go-version }}
-        uses: actions/setup-go@v2
+      - name: Set up Go ${{ matrix.go-version }} on ${{ matrix.os }}(${{ matrix.arch }})
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
+          architecture: ${{ matrix.arch }}
 
       # https://github.com/marketplace/actions/checkout
       - name: Checkout code
@@ -39,9 +41,9 @@ jobs:
             ~/.cache/go-build
             ~/Library/Caches/go-build
             %LocalAppData%\go-build
-          key: ${{ runner.os }}-${{ matrix.go-version }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-${{ matrix.arch }}-${{ matrix.go-version }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.go-version }}-go-
+            ${{ runner.os }}-${{ matrix.arch }}-${{ matrix.go-version }}-go-
 
       - name: Test
         run: go test -v -cover ./...
