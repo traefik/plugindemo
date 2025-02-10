@@ -1,66 +1,72 @@
-// Package plugindemo a demo plugin.
-package plugindemo
+package main
 
 import (
-	"bytes"
-	"context"
-	"fmt"
-	"net/http"
-	"text/template"
+    "context"
+    "crypto/hmac"
+    "crypto/sha256"
+    "encoding/base64"
+    "fmt"
+    "net/http"
 )
 
 // Config the plugin configuration.
 type Config struct {
-	Headers map[string]string `json:"headers,omitempty"`
+    Headers   []string `json:"headers,omitempty"` // Headers to include in the signature computation
+    SecretKey string   `json:"secretKey,omitempty"`
 }
 
 // CreateConfig creates the default plugin configuration.
 func CreateConfig() *Config {
-	return &Config{
-		Headers: make(map[string]string),
-	}
+    return &Config{
+        Headers:   []string{"X-Date", "Authorization", "APP-ID"},
+        SecretKey: "",
+    }
 }
 
-// Demo a Demo plugin.
-type Demo struct {
-	next     http.Handler
-	headers  map[string]string
-	name     string
-	template *template.Template
+// SignatureVerifier a plugin to verify request signatures.
+type SignatureVerifier struct {
+    next     http.Handler
+    headers  []string
+    secretKey string
 }
 
-// New created a new Demo plugin.
+// New creates a new SignatureVerifier plugin.
 func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
-	if len(config.Headers) == 0 {
-		return nil, fmt.Errorf("headers cannot be empty")
-	}
-
-	return &Demo{
-		headers:  config.Headers,
-		next:     next,
-		name:     name,
-		template: template.New("demo").Delims("[[", "]]"),
-	}, nil
+    if len(config.Headers) == 0 || config.SecretKey == "" {
+        return nil, fmt.Errorf("headers and secretKey must be provided")
+    }
+    return &SignatureVerifier{
+        next:     next,
+        headers:  config.Headers,
+        secretKey: config.SecretKey,
+    }, nil
 }
 
-func (a *Demo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	for key, value := range a.headers {
-		tmpl, err := a.template.Parse(value)
-		if err != nil {
-			http.Error(rw, err.Error(), http.StatusInternalServerError)
-			return
-		}
+func (sv *SignatureVerifier) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
+    // Extract required headers
+    var messageParts []string
+    for _, header := range sv.headers {
+        value := req.Header.Get(header)
+        if value == "" {
+            http.Error(rw, fmt.Sprintf("Missing required header: %s", header), http.StatusForbidden)
+            return
+        }
+        messageParts = append(messageParts, value)
+    }
 
-		writer := &bytes.Buffer{}
+    // Generate the expected signature
+    message := fmt.Sprint(messageParts...)
+    expectedSignature := base64.StdEncoding.EncodeToString(
+        hmac.New(sha256.New, []byte(sv.secretKey)).Sum([]byte(message)),
+    )
 
-		err = tmpl.Execute(writer, req)
-		if err != nil {
-			http.Error(rw, err.Error(), http.StatusInternalServerError)
-			return
-		}
+    // Verify the X-Signature header
+    signature := req.Header.Get("X-Signature")
+    if signature != expectedSignature {
+        http.Error(rw, "Invalid signature", http.StatusForbidden)
+        return
+    }
 
-		req.Header.Set(key, writer.String())
-	}
-
-	a.next.ServeHTTP(rw, req)
+    // If all checks pass, forward the request to the next handler
+    sv.next.ServeHTTP(rw, req)
 }
