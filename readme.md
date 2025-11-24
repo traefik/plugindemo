@@ -193,7 +193,7 @@ In the future, we will try to provide something better and based on levels.
 
 Traefik plugins are stored and hosted as public GitHub repositories.
 
-Every 30 minutes, the Plugins Catalog online service polls Github to find plugins and add them to its catalog.
+Once a day, the Plugins Catalog online service polls Github to find plugins and add them to its catalog.
 
 ### Prerequisites
 
